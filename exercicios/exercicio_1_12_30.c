@@ -1,5 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
+#define PI 3.14159265358979323846
+
+float degreeToRad (int degree) {
+  return degree * PI / 180;
+}
 
 float power (float a, int n) {
   float res = a;
@@ -21,19 +28,24 @@ int fatorial (int n) {
   return fat;
 }
 
-float seno (float a) {
-  return a - (power(a, 3)/fatorial(3)) + (power(a, 5)/fatorial(5)) - (power(a, 7)/fatorial(7));
+float seno (int a) {
+  float res = a;
+  float rad = degreeToRad(a);
+
+  res = rad - (power(rad, 3)/fatorial(3)) + (power(rad, 5)/fatorial(5)) - (power(rad, 7)/fatorial(7));
+
+  return res;
 }
 
-void showResult (float degree, float result) {
-  printf("%.1f  | %3.3f\n", degree, result);
+void showResult (int degree, float result) {
+  printf("%3d  | %3.6f | %3.6f\n", degree, result, sin(degreeToRad(degree)));
 }
 
 int main () {
   float senoA;
-  printf("Grau | Seno de A\n");
+  printf("Grau | Meu Seno | Seno Real\n");
 
-  for (float i = 0.0; i <= 6.3; i += 0.1) {
+  for (int i = 0; i <= 360; i++) {
     senoA = seno(i);
     showResult(i, senoA);
   }
