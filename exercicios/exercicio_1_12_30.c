@@ -6,8 +6,8 @@ float grauParaRad (int grau) {
   return grau * M_PI / 180;
 }
 
-double exponencial (float n, int exp) {
-  double res = n;
+float exponencial (float n, int exp) {
+  float res = n;
 
   if (exp == 0) return 1;
 
@@ -42,9 +42,9 @@ int normalizaAngulo (int grau) {
   }
 }
 
-double meuSeno (int angulo, int termos) {
-  double termo = 0.0;
-  double res = 0.0;
+float meuSeno (int angulo, int termos) {
+  float termo = 0.0;
+  float res = 0.0;
   float rad = 0.0;
   int novoAngulo = 0;
   int exp = 0;
@@ -71,8 +71,8 @@ double meuSeno (int angulo, int termos) {
 int main () {
   int cabecalho = 0;
   int termos = 33;
-  double senoMeu = 0.0;
-  double senoMat = 0.0;
+  float senoMeu = 0.0;
+  float senoMat = 0.0;
 
   cabecalho = printf("Grau | Meu Seno  | Seno Real | Diferença\n");
 
