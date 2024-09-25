@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-float grauParaRad (int grau) {
-  return grau * M_PI / 180;
+double grauParaRad (int grau) {
+  return grau * M_PI / 180.0;
 }
 
-float exponencial (float n, int exp) {
-  float res = n;
+double exponencial (double n, int exp) {
+  double res = n;
 
   if (exp == 0) return 1;
 
-  for (int i = 2; i < exp; i++) {
+  for (int i = 1; i < exp; i++) {
     res *= n;
   }
 
@@ -28,64 +28,43 @@ long fatorial (int n) {
   return fat;
 }
 
-int normalizaAngulo (int grau) {
-  int grau1aVolta = grau % 360;
-
-  if (grau1aVolta <= 90) {
-    return grau1aVolta;
-  } else if (grau1aVolta <= 180) {
-    return 180 - grau1aVolta;
-  } else if (grau1aVolta <= 270) {
-    return grau1aVolta - 180;
-  } else {
-    return 360 - grau1aVolta;
-  }
-}
-
-float meuSeno (int angulo, int termos) {
-  float termo = 0.0;
-  float res = 0.0;
-  float rad = 0.0;
-  int novoAngulo = 0;
-  int exp = 0;
-
-  novoAngulo = normalizaAngulo(angulo);
-  // rad = grauParaRad(angulo);
-  rad = grauParaRad(novoAngulo);
+double senoMacLaurin(double x, int termos) {
+  double seno = 0.0;
+  int sinal = 0;
+  int expoente = 0;
 
   for (int i = 0; i < termos; i++) {
-    exp = 2 * i + 1;
-    termo = exponencial(rad, exp)/fatorial(exp);
-
-    if (i % 2 == 0) {
-      res += termo;
-    } else {
-      res -= termo;
-    }
+    sinal = (i % 2 == 0) ? 1 : -1;
+    expoente = 2 * i + 1;
+    seno += sinal * (exponencial(x, expoente) / fatorial(expoente));
   }
 
-  // return res;
-  return angulo > 180 && angulo < 360 ? -res : res;
+  return seno;
 }
 
 int main () {
+  int termos = 10;
   int cabecalho = 0;
-  int termos = 33;
-  float senoMeu = 0.0;
-  float senoMat = 0.0;
+  double senoMeu = 0.0;
+  double senoMat = 0.0;
+  double anguloRad = 0.0;
+  double diferenca = 0.0;
 
   cabecalho = printf("Grau | Meu Seno  | Seno Real | Diferença\n");
 
-  for (int i = 0; i < cabecalho; i++) {
+  for (int i = 0; i < (cabecalho - 2); i++) {
     printf(i == 5 || i == 17 || i == 29 ? "|" : "-");
   }
 
   printf("\n");
 
   for (int angulo = 0; angulo <= 360; angulo++) {
-    senoMeu = meuSeno(angulo, termos);
-    senoMat = sin(grauParaRad(angulo));
-    printf("%4d | %9f | %9f | %9f\n", angulo, senoMeu, senoMat, senoMeu - senoMat);
+    anguloRad = grauParaRad(angulo);
+    senoMeu = senoMacLaurin(anguloRad, termos);
+    senoMat = sin(anguloRad);
+    diferenca = fabs(senoMeu - senoMat);
+
+    printf("%4d | %9f | %9f | %8f\n", angulo, senoMeu, senoMat, diferenca);
   }
 
   return 0;
