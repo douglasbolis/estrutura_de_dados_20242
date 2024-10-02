@@ -21,6 +21,12 @@ struct Date setDate(int day, int month, int year) {
   return date;
 }
 
+struct Date setDate2(int day, int month, int year) {
+  struct Date date = { day, month, year };
+
+  return date;
+}
+
 int main() {
   struct Person person;
   int day, month, year;
@@ -32,7 +38,7 @@ int main() {
   printf("Quando voce nasceu? [dd/mm/aaaa]: ");
   scanf("%d/%d/%d", &day, &month, &year);
 
-  person.birthdate = setDate(day, month, year);
+  person.birthdate = setDate2(day, month, year);
 
   printf("\n%s, voce nasceu em: %d/%d/%d.", person.name, person.birthdate.day, person.birthdate.month, person.birthdate.year);
 
