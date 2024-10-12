@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "./with_struct/tad_circle_struct.h"
-// #include "./without_struct/tad_circle_double.h"
+// #include "./with_double/tad_circle_double.h"
 
 int main() {
   Circle circle = createCircle(2.5);
