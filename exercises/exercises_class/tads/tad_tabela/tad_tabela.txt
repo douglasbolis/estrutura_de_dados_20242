@@ -1,0 +1,40 @@
+ABC1D23
+Ford
+Mustang GT
+350.000
+DEF4G56
+Ferrari
+488 Spider
+1.500.000
+GHI7H89
+McLaren
+720S
+2.200.000
+JKL0M12
+Mercedes
+AMG C63
+500.000
+MNO3P45
+Ford
+Ranger Raptor
+250.000
+QRS6T78
+Ferrari
+F8 Tributo
+1.700.000
+TUV9W01
+McLaren
+P1
+3.500.000
+XYZ2A34
+Mercedes
+GLE 63
+600.000
+QWE5R67
+Ford
+EcoSport
+95.000
+ASD8F90
+Ferrari
+SF90 Stradale
+3.000.000
