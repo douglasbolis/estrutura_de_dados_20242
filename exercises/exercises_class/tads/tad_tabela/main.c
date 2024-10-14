@@ -10,11 +10,12 @@ int main() {
   v = getVeiculoMaisCaro(tab);
   exibeVeiculo(v);
 
-  printf("Veiculo mais barato:\n");
+  printf("\nVeiculo mais barato:\n");
   v = getVeiculoMaisBarato(tab);
   exibeVeiculo(v);
 
-  veiculosFord = filtraVeiculosPelaMarca(tab, "FORD");
+  veiculosFord = filtraVeiculosPelaMarca(tab, "Ford");
+  printf("\nVeiculos da marca Ford:\n");
   exibeVeiculos(veiculosFord);
 
   return 0;

@@ -1,14 +1,14 @@
 typedef struct {
-  char placa[21];
-  char marca[21];
-  char modelo[21];
+  char placa[30];
+  char marca[30];
+  char modelo[30];
   double valor;
 } Veiculo;
 
 typedef struct {
   int tam;
   int total;
-  Veiculo[] veiculos;
+  Veiculo veiculos[10];
 } Tabela;
 
 Tabela criaTabela();
