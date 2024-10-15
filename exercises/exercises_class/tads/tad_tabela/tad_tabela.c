@@ -18,28 +18,29 @@ Tabela criaTabela() {
 
   for (int i = 0; i < tabela.total; i++) {
     char valorAux[30] = "";
+    int j = 0;
 
     // Placa
     fgets(entrada, 30, stdin);
-    for (int j = 0; j < strlen(entrada) - 1; j++) {
+    for (int j = 0; entrada[j] != '\n'; j++) {
       tabela.veiculos[i].placa[j] = entrada[j];
     }
 
     // Marca
     fgets(entrada, 30, stdin);
-    for (int j = 0; j < strlen(entrada) - 1; j++) {
+    for (int j = 0; entrada[j] != '\n'; j++) {
       tabela.veiculos[i].marca[j] = entrada[j];
     }
 
     // Modelo
     fgets(entrada, 30, stdin);
-    for (int j = 0; j < strlen(entrada) - 1; j++) {
+    for (int j = 0; entrada[j] != '\n'; j++) {
       tabela.veiculos[i].modelo[j] = entrada[j];
     }
 
     // Valor
     fgets(entrada, 30, stdin);
-    for (int j = 0; j < strlen(entrada) - 1; j++) {
+    for (int j = 0; entrada[j] != '\n'; j++) {
       valorAux[j] = entrada[j];
     }
     tabela.veiculos[i].valor = atof(valorAux);
