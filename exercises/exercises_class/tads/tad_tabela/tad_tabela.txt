@@ -29,7 +29,7 @@ P1
 XYZ2A34
 Mercedes
 GLE 63
-600000
+60000
 QWE5R67
 Ford
 EcoSport
