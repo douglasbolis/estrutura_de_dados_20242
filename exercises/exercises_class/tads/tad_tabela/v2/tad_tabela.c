@@ -13,35 +13,44 @@ Tabela newTabela() {
 
 Tabela criaTabela() {
   Tabela tabela = newTabela();
-  char entrada[30];
+  FILE *file = fopen("tad_tabela.txt", "r");
 
-  for (int i = 0; i < tabela.total; i++) {
-    char valorAux[30] = "";
+  if (file != NULL) {
+    for (tabela.tam = 0; tabela.tam < tabela.total; tabela.tam++) {
+      char entrada[30];
+      char placa[30];
+      char marca[30];
+      char modelo[30];
+      char valorAux[30];
+      double valor;
 
-    // Placa
-    fgets(entrada, 30, stdin);
-    entrada[strlen(entrada) - 1] = '\0';
-    strcpy(tabela.veiculos[i].placa, entrada);
+      // Placa
+      fgets(entrada, 30, file);
+      entrada[strlen(entrada) - 1] = '\0';
+      strcpy(placa, entrada);
 
-    // Marca
-    fgets(entrada, 30, stdin);
-    entrada[strlen(entrada) - 1] = '\0';
-    strcpy(tabela.veiculos[i].marca, entrada);
+      // Marca
+      fgets(entrada, 30, file);
+      entrada[strlen(entrada) - 1] = '\0';
+      strcpy(marca, entrada);
 
-    // Modelo
-    fgets(entrada, 30, stdin);
-    entrada[strlen(entrada) - 1] = '\0';
-    strcpy(tabela.veiculos[i].modelo, entrada);
+      // Modelo
+      fgets(entrada, 30, file);
+      entrada[strlen(entrada) - 1] = '\0';
+      strcpy(modelo, entrada);
 
-    // Valor
-    fgets(entrada, 30, stdin);
-    entrada[strlen(entrada) - 1] = '\0';
-    strcpy(valorAux, entrada);
-    tabela.veiculos[i].valor = atof(valorAux);
+      // Valor
+      fgets(entrada, 30, file);
+      entrada[strlen(entrada) - 1] = '\0';
+      strcpy(valorAux, entrada);
+      valor = atof(valorAux);
 
-    // Mais um veículo adicionado
-    tabela.tam++;
+      // Mais um veículo adicionado
+      tabela.veiculos[tabela.tam] = criaVeiculo(placa, marca, modelo, valor);
+    }
   }
+
+  fclose(file);
 
   return tabela;
 }
@@ -103,10 +112,18 @@ Tabela filtraVeiculosPelaMarca(Tabela t, char marca[]) {
 }
 
 void exibeVeiculo(Veiculo v) {
-  printf("%s - %s %s - $%2.lf\n", v.placa, v.marca, v.modelo, v.valor);
+  if (strlen(v.placa) != 0) {
+    printf("%s - %s %s - $%2.lf\n", v.placa, v.marca, v.modelo, v.valor);
+  } else {
+    printf("Veículo não encontrado.\n");
+  }
 }
 
 void exibeVeiculos(Tabela t) {
+  if (t.tam == 0) {
+    printf("Nenhum veiculo encontrado.\n");
+  }
+
   for (int i = 0; i < t.tam; i++) {
     exibeVeiculo(t.veiculos[i]);
   }
