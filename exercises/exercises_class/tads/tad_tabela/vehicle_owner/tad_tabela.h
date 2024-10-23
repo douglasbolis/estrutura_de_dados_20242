@@ -14,7 +14,7 @@ typedef struct {
 
 typedef struct {
   int tam;
-  Veiculo veiculos[];
+  Veiculo veiculos[50];
 } TabelaVeiculos;
 
 typedef struct {
@@ -26,19 +26,14 @@ typedef struct {
 
 typedef struct {
   int tam;
-  Proprietario proprietarios[];
-} TabelaProprietario;
+  Proprietario proprietarios[20];
+} TabelaProprietarios;
 
-TabelaVeiculo loadTabelaVeiculos(char*);
-TabelaProprietario loadTabelaProprietarios(char*);
+TabelaVeiculos loadTabelaVeiculos(char[]);
+TabelaProprietarios loadTabelaProprietarios(char[]);
 
-Proprietario buscaProprietario(TabelaProprietario, char*);
-TabelaVeiculos filtraVeiculosProprietario(Proprietario, TabelaVeiculos);
-
-void listaVeiculos(TabelaVeiculos);
-void listaProprietarios(TabelaProprietario);
-
-void listaVeiculosProprietario(Proprietario, TabelaVeiculos);
-void listaVeiculosProprietarios(TabelaProprietario, TabelaVeiculos);
+void exibeProprietarios(TabelaProprietarios);
+void exibeVeiculos(TabelaVeiculos);
+void exibeVeiculosProprietarios(TabelaProprietarios, TabelaVeiculos);
 
 #endif

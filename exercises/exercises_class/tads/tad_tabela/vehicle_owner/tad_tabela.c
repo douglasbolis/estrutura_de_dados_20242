@@ -1,43 +1,41 @@
-#include "tad_tabela.c"
+#include<stdio.h>
+#include<string.h>
+#include "tad_tabela.h"
 
-TabelaVeiculo newTabelaVeiculos() {
+TabelaVeiculos loadTabelaVeiculos(char nomeArq[]) {
   TabelaVeiculos tab;
+  FILE *arq = fopen(nomeArq, "rt");
+  char *token;
+  char entrada[100];
+
   tab.tam = 0;
 
-  return tab;
-}
-
-TabelaVeiculo loadTabelaVeiculos(char *nomeArq) {
-  TabelaVeiculos tab = newTabelaVeiculos();
-  FILE *arq = fopen(nomeArq, "r");
-  const char s[2] = "-";
-  char *token;
-  char entrada[128];
-
   // Descartando primeira linha
-  fgets(entrada, 128, arq);
+  fgets(entrada, 100, arq);
+  printf("\nLinha: %s", entrada);
 
   while (!feof(arq)) {
-    fgets(entrada, 128, arq);
-    entrada[strlen(entrada) - 1] = '\0'
+    fgets(entrada, 100, arq);
+    printf("\nLinha: %s", entrada);
+    entrada[strlen(entrada) - 1] = '\0';
 
     // Placa
-    token = strtok(entrada, s);
-    strcpy(tab.veiculos[tab.aux].placa, token);
+    token = strtok(entrada, ",");
+    strcpy(tab.veiculos[tab.tam].placa, token);
 
     // Marca
-    token = strtok(entrada, s);
-    strcpy(tab.veiculos[tab.aux].marca, token);
+    token = strtok(NULL, ",");
+    strcpy(tab.veiculos[tab.tam].marca, token);
 
     // Modelo
-    token = strtok(entrada, s);
-    strcpy(tab.veiculos[tab.aux].modelo, token);
+    token = strtok(NULL, ",");
+    strcpy(tab.veiculos[tab.tam].modelo, token);
 
     // CPF do proprietario
-    token = strtok(entrada, s);
-    strcpy(tab.veiculos[tab.aux].cpfProprietario, token);
+    token = strtok(NULL, ",");
+    strcpy(tab.veiculos[tab.tam].cpfProprietario, token);
 
-    tab.aux++;
+    tab.tam++;
   }
 
   fclose(arq);
@@ -45,37 +43,38 @@ TabelaVeiculo loadTabelaVeiculos(char *nomeArq) {
   return tab;
 }
 
-TabelaProprietario loadTabelaProprietarios(char *nomeArq) {
-  TabelaProprietarios tab = newTabelaProprietarios();
-  FILE *arq = fopen(nomeArq, "r");
-  const char s[2] = "-";
+TabelaProprietarios loadTabelaProprietarios(char nomeArq[]) {
+  TabelaProprietarios tab;
+  FILE *arq = fopen(nomeArq, "rt");
   char *token;
-  char entrada[128];
+  char entrada[100];
+
+  tab.tam = 0;
 
   // Descartando primeira linha
-  fgets(entrada, 128, arq);
+  fgets(entrada, 100, arq);
 
   while (!feof(arq)) {
-    fgets(entrada, 128, arq);
-    entrada[strlen(entrada) - 1] = '\0'
+    fgets(entrada, 100, arq);
+    entrada[strlen(entrada) - 1] = '\0';
 
     // CPF do proprietario
-    token = strtok(entrada, s);
-    strcpy(tab.proprietarios[tab.aux].cpf, token);
+    token = strtok(entrada, ",");
+    strcpy(tab.proprietarios[tab.tam].cpf, token);
 
     // Nome
-    token = strtok(entrada, s);
-    strcpy(tab.proprietarios[tab.aux].nome, token);
+    token = strtok(NULL, ",");
+    strcpy(tab.proprietarios[tab.tam].nome, token);
 
     // E-mail
-    token = strtok(entrada, s);
-    strcpy(tab.proprietarios[tab.aux].email, token);
+    token = strtok(NULL, ",");
+    strcpy(tab.proprietarios[tab.tam].email, token);
 
     // Celular
-    token = strtok(entrada, s);
-    strcpy(tab.proprietarios[tab.aux].celular, token);
+    token = strtok(NULL, ",");
+    strcpy(tab.proprietarios[tab.tam].celular, token);
 
-    tab.aux++;
+    tab.tam++;
   }
 
   fclose(arq);
@@ -83,11 +82,11 @@ TabelaProprietario loadTabelaProprietarios(char *nomeArq) {
   return tab;
 }
 
-Proprietario buscaProprietario(TabelaProprietario tabP, char nome[]) {
+Proprietario buscaProprietario(TabelaProprietarios tabP, char nome[]) {
   Proprietario p;
   int i = 0;
 
-  while (p == NULL && i < tabP.tam) {
+  while (p.nome == NULL && i < tabP.tam) {
     if (strcmp(tabP.proprietarios[i].nome, nome) == 0) {
       p = tabP.proprietarios[i];
     }
@@ -97,10 +96,56 @@ Proprietario buscaProprietario(TabelaProprietario tabP, char nome[]) {
   return p;
 }
 
-TabelaVeiculos filtraVeiculosProprietario(Proprietario p, TabelaVeiculos tabV);
+TabelaVeiculos filtraVeiculosProprietario(Proprietario p, TabelaVeiculos tabV) {
+  TabelaVeiculos tabOwner;
+  tabOwner.tam = 0;
 
-void listaVeiculos(TabelaVeiculos);
-void listaProprietarios(TabelaProprietario);
+  for (int i = 0; i < tabV.tam; i++) {
+    if (strcmp(tabV.veiculos[i].cpfProprietario, p.cpf) == 0) {
+      tabOwner.veiculos[tabOwner.tam] = tabV.veiculos[i];
+      tabOwner.tam++;
+    }
+  }
 
-void listaVeiculosProprietario(Proprietario, TabelaVeiculos);
-void listaVeiculosProprietarios(TabelaProprietario, TabelaVeiculos);
+  return tabOwner;
+}
+
+void exibeVeiculos(TabelaVeiculos tabV) {
+  Veiculo v;
+
+  for (int i = 0; i < tabV.tam; i++) {
+    v = tabV.veiculos[i];
+    printf("\n%s - %s - %s - %s", v.placa, v.marca, v.modelo, v.cpfProprietario);
+  }
+}
+
+void exibeProprietarios(TabelaProprietarios tabP) {
+  Proprietario v;
+
+  for (int i = 0; i < tabP.tam; i++) {
+    v = tabP.proprietarios[i];
+    printf("\n%s - %s %s - %s", v.cpf, v.nome, v.email, v.celular);
+  }
+}
+
+void exibeVeiculosProprietario(Proprietario p, TabelaVeiculos tabV) {
+  Veiculo v;
+
+  printf("\nProprietario: %s", p.nome);
+  
+  for (int i = 0; i < tabV.tam; i++) {
+    v = tabV.veiculos[i];
+    printf("\n%s - %s %s", v.placa, v.marca, v.modelo);
+  }
+}
+
+void exibeVeiculosProprietarios(TabelaProprietarios tabP, TabelaVeiculos tabV) {
+  TabelaVeiculos newTabV;
+  Proprietario p;
+
+  for (int i = 0; i < tabP.tam; i++) {
+    p = tabP.proprietarios[i];
+    newTabV = filtraVeiculosProprietario(p, tabV);
+    exibeVeiculosProprietario(p, newTabV);
+  }
+}
