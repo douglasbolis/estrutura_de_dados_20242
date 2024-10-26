@@ -12,11 +12,9 @@ TabelaVeiculos loadTabelaVeiculos(char nomeArq[]) {
 
   // Descartando primeira linha
   fgets(entrada, 100, arq);
-  printf("\nLinha: %s", entrada);
 
   while (!feof(arq)) {
     fgets(entrada, 100, arq);
-    printf("\nLinha: %s", entrada);
     entrada[strlen(entrada) - 1] = '\0';
 
     // Placa
@@ -84,11 +82,13 @@ TabelaProprietarios loadTabelaProprietarios(char nomeArq[]) {
 
 Proprietario buscaProprietario(TabelaProprietarios tabP, char nome[]) {
   Proprietario p;
+  int achou = 0;
   int i = 0;
 
-  while (p.nome == NULL && i < tabP.tam) {
+  while (achou != 1 && i < tabP.tam) {
     if (strcmp(tabP.proprietarios[i].nome, nome) == 0) {
       p = tabP.proprietarios[i];
+      achou = 1;
     }
     i++;
   }
@@ -115,7 +115,7 @@ void exibeVeiculos(TabelaVeiculos tabV) {
 
   for (int i = 0; i < tabV.tam; i++) {
     v = tabV.veiculos[i];
-    printf("\n%s - %s - %s - %s", v.placa, v.marca, v.modelo, v.cpfProprietario);
+    printf("%s - %s - %s - %s\n", v.placa, v.marca, v.modelo, v.cpfProprietario);
   }
 }
 
@@ -124,18 +124,20 @@ void exibeProprietarios(TabelaProprietarios tabP) {
 
   for (int i = 0; i < tabP.tam; i++) {
     v = tabP.proprietarios[i];
-    printf("\n%s - %s %s - %s", v.cpf, v.nome, v.email, v.celular);
+    printf("%s - %s %s - %s\n", v.cpf, v.nome, v.email, v.celular);
   }
 }
 
 void exibeVeiculosProprietario(Proprietario p, TabelaVeiculos tabV) {
   Veiculo v;
 
-  printf("\nProprietario: %s", p.nome);
+  printf("\nProprietario: %s\n", p.nome);
+  printf("Contato: %s / %s\n", p.celular, p.email);
+  printf("Veiculos:\n");
   
   for (int i = 0; i < tabV.tam; i++) {
     v = tabV.veiculos[i];
-    printf("\n%s - %s %s", v.placa, v.marca, v.modelo);
+    printf("%s - %s %s\n", v.placa, v.marca, v.modelo);
   }
 }
 

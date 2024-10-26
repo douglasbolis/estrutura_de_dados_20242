@@ -3,11 +3,15 @@
 
 int main() {
   TabelaProprietarios tabP = loadTabelaProprietarios("bdproprietarios.txt");
-  // TabelaVeiculos tabV = loadTabelaVeiculos("bdveiculos.txt");
+  TabelaVeiculos tabV = loadTabelaVeiculos("bdveiculos.txt");
 
-  exibeProprietarios(tabP);
+  // printf("Proprietarios\n");
+  // exibeProprietarios(tabP);
+  // printf("\nVeiculos\n");
   // exibeVeiculos(tabV);
-  // exibeVeiculosProprietarios(tabP, tabV);
+
+  printf("=== x Proprietarios x Veiculos x ===\n");
+  exibeVeiculosProprietarios(tabP, tabV);
 
   return 0;
 }
