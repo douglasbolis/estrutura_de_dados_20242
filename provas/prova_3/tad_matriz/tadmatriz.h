@@ -11,7 +11,7 @@ typedef struct t_matriz {
 
 tadmatriz cria_mat(int qlinhas, int qcolunas);
 void set_elem(tadmatriz tadA, int linha, int coluna, float valor);
-float get_elem(tadmatriz tadA, tint linha, int coluna);
+float get_elem(tadmatriz tadA, int linha, int coluna);
 int get_linhas(tadmatriz matA);
 int get_colunas(tadmatriz matA);
 tadmatriz soma(tadmatriz tadA, tadmatriz tadB);
